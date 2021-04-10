@@ -3,20 +3,17 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 const Game = (props) => {
 
-    const [gameId, setGameId] = React.useState("");
-
-    const onPressJoin = () => {
-
-    }
-    
-    const onPressReturn = () => {
-        props.gameOver(true);
+    const onGameOver = () => {
+        props.onGameOver(true);
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Game ID: {props.gameId}</Text>
-            <Button title='Return' onPress={onPressReturn}/>
+            <Text style={styles.text}>ID: {props.gameId}</Text>
+            <Text style={styles.text}>Password: {props.gamePassword}</Text>
+            <View style={styles.separator} />
+            <Text style={styles.text}>Waiting for someone to join...</Text>
+            {/* <Button title='Return' onPress={onPressReturn}/> */}
         </View>
     );
 }
@@ -43,6 +40,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10,
     },
+    separator: {
+        marginVertical: 18,
+        borderBottomColor: '#FF0000',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+    }
 });
 
 export default Game;

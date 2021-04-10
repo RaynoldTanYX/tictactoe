@@ -9,18 +9,20 @@ const App = () => {
 
   const [username, setUsername] = React.useState("");
   const [gameId, setGameId] = React.useState("");
+  const [gamePassword, setGamePassword] = React.useState("");
 
-  const gameOver = () => {
+  const onGameOver = () => {
     console.log("User has left the game");
     setGameId("");
+    setGamePassword("");
   }
 
   return (
     <View style={styles.container}>
       <Header title='Tic-Tac-Toe' />
       {username === "" ? <Registration onUsernameSet={setUsername} />
-        : gameId === "" ? <Menu onGameIdSet={setGameId} />
-          : <Game gameId={gameId} gameOver={gameOver} />}
+        : gameId === "" ? <Menu username={username} onGameIdSet={setGameId} onGamePasswordSet={setGamePassword} />
+          : <Game gameId={gameId} gamePassword={gamePassword} onGameOver={onGameOver} />}
 
     </View>
   );

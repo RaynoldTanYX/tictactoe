@@ -4,24 +4,46 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 const Menu = (props) => {
 
     const [gameId, setGameId] = React.useState("");
+    const [gamePassword, setGamePassword] = React.useState("");
 
     const onPressJoin = () => {
         console.log("User has pressed join: " + gameId);
         props.onGameIdSet(gameId);
+        props.onGamePasswordSet(gamePassword);
     }
-    
+
     const onPressCreate = () => {
         console.log("User has pressed create: " + gameId);
-        props.onGameIdSet(gameId);
+        fetch('https://o63yi7inyg.execute-api.ap-southeast-1.amazonaws.com/default/tictactoe-creategame', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                player1Name: props.username,
+            })
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json);
+                props.onGameIdSet(json.gameId);
+                props.onGamePasswordSet(json.gamePassword);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Game ID</Text>
-            <TextInput style={styles.textinput} onChangeText={setGameId}>{gameId}</TextInput>
-            <Button title='Join A Game' onPress={onPressJoin}/>
+            <Text style={styles.text}>Welcome, {props.username}</Text>
             <View style={styles.separator} />
-            <Button title='Create A Game' onPress={onPressCreate}/>
+            <TextInput style={styles.textinput} onChangeText={setGameId} placeholder="Game ID">{gameId}</TextInput>
+            <TextInput style={styles.textinput} onChangeText={setGamePassword} placeholder="Password">{gamePassword}</TextInput>
+            <Button title='Join A Game' onPress={onPressJoin} />
+            <View style={styles.separator} />
+            <Button title='Create A Game' onPress={onPressCreate} />
         </View>
     );
 }
@@ -30,7 +52,7 @@ const Menu = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 3,
-        paddingTop: '50%',
+        paddingTop: '35%',
         //justifyContent: 'center',
         alignItems: 'center'
     },
