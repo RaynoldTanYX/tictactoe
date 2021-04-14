@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-
+import { requestCreateGame, requestJoinGame } from './Database';
 const Menu = (props) => {
 
     const [gameId, setGameId] = React.useState("");
@@ -8,31 +8,32 @@ const Menu = (props) => {
 
     const onPressJoin = () => {
         console.log("User has pressed join: " + gameId);
-        props.onGameIdSet(gameId);
-        props.onGamePasswordSet(gamePassword);
+        requestJoinGame(props.username, gameId, gamePassword).then((response) => {
+            if (response.err === null) {
+                props.onGameDataSet(response.data);
+            }
+            else {
+                //TODO: let user know of error
+                console.error(response.err);
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
     }
 
     const onPressCreate = () => {
-        console.log("User has pressed create: " + gameId);
-        fetch('https://o63yi7inyg.execute-api.ap-southeast-1.amazonaws.com/default/tictactoe-creategame', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                player1Name: props.username,
-            })
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                console.log(json);
-                props.onGameIdSet(json.gameId);
-                props.onGamePasswordSet(json.gamePassword);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        console.log("User has pressed create");
+        requestCreateGame(props.username).then((response) => {
+            if (response.err === null) {
+                props.onGameDataSet(response.data);
+            }
+            else {
+                //TODO: let user know of error
+                console.error(response.err);
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
     }
 
     return (

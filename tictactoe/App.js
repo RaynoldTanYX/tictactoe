@@ -8,8 +8,7 @@ import Game from './components/Game';
 const App = () => {
 
   const [username, setUsername] = React.useState("");
-  const [gameId, setGameId] = React.useState("");
-  const [gamePassword, setGamePassword] = React.useState("");
+  const [gameData, setGameData] = React.useState(null);
 
   const onGameOver = () => {
     console.log("User has left the game");
@@ -21,8 +20,8 @@ const App = () => {
     <View style={styles.container}>
       <Header title='Tic-Tac-Toe' />
       {username === "" ? <Registration onUsernameSet={setUsername} />
-        : gameId === "" ? <Menu username={username} onGameIdSet={setGameId} onGamePasswordSet={setGamePassword} />
-          : <Game gameId={gameId} gamePassword={gamePassword} onGameOver={onGameOver} />}
+        : gameData === null ? <Menu username={username} onGameDataSet={setGameData} />
+          : <Game gameData={gameData} onGameOver={onGameOver} />}
 
     </View>
   );

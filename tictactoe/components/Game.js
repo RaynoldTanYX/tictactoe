@@ -7,14 +7,32 @@ const Game = (props) => {
         props.onGameOver(true);
     }
 
+    //TODO: receive info when someone joins my game
+
+    //TODO: gameplay
+    
+    //TODO: send move info
+
+    //TODO: receive move info
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>ID: {props.gameId}</Text>
-            <Text style={styles.text}>Password: {props.gamePassword}</Text>
-            <View style={styles.separator} />
-            <Text style={styles.text}>Waiting for someone to join...</Text>
-            {/* <Button title='Return' onPress={onPressReturn}/> */}
-        </View>
+        props.gameData.player1Name == "" || props.gameData.player2Name == "" ?
+            <View style={styles.container}>
+                <Text style={styles.text}>ID: {props.gameData.gameId}</Text>
+                <Text style={styles.text}>Password: {props.gameData.gamePassword}</Text>
+                <View style={styles.separator} />
+                <Text style={styles.text}>Waiting for someone to join...</Text>
+            </View>
+            :
+            <View style={styles.container}>
+                <View style={styles.separator} />
+                <Text style={styles.text}>ID: {props.gameData.gameId}</Text>
+                <Text style={styles.text}>Password: {props.gameData.gamePassword}</Text>
+                <View style={styles.separator} />
+                <Text style={styles.text}>{props.gameData.player1Name}</Text>
+                <Text style={styles.text}>vs</Text>
+                <Text style={styles.text}>{props.gameData.player2Name}</Text>
+            </View>
     );
 }
 
