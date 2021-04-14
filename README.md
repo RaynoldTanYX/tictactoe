@@ -2,9 +2,9 @@
 
 Basic multiplayer tic tac toe game.
 
-Frontend: React Native
-Backend: AWS Lambda
-Database: AWS DynamoDB
+- Frontend: React Native
+- Backend: AWS Lambda
+- Database: AWS DynamoDB
  
 ## Development
 
