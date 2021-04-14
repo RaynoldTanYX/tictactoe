@@ -14,9 +14,9 @@ const Game = (props) => {
     //TODO: send move info
 
     //TODO: receive move info
-
+    console.log(props.gameData)
     return (
-        props.gameData.player1Name == "" || props.gameData.player2Name == "" ?
+        props.gameData.player1Name === "" || props.gameData.player1Name === undefined|| props.gameData.player2Name === ""  || props.gameData.player2Name === undefined?
             <View style={styles.container}>
                 <Text style={styles.text}>ID: {props.gameData.gameId}</Text>
                 <Text style={styles.text}>Password: {props.gameData.gamePassword}</Text>
